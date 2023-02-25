@@ -1,7 +1,8 @@
 import { logOut } from '../firebase/auth';
 
-function MainPage() {
+function AdminPage() {
     return <>
+        <p>{'Admin felület'}</p>
         <button onClick={() => {
             logOut();
         }}>
@@ -10,4 +11,4 @@ function MainPage() {
     </>;
 }
 
-export default MainPage;
+export default AdminPage;

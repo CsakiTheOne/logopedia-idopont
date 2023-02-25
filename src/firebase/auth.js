@@ -12,6 +12,7 @@ let onAuthStateChangedListeners = [];
 let currentUser = null;
 
 onAuthStateChanged(auth, user => {
+    currentUser = user;
     onAuthStateChangedListeners.forEach(listener => listener(user));
 });
 
@@ -34,32 +35,26 @@ function getCurrentUser() {
 function register(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
-            currentUser = userCredential.user;
             console.log('User registered:');
             console.log({currentUser});
-            //callback(currentUser);
+            
         })
         .catch(error => {
-            //callback(null);
+            
         });
 }
 
 function logIn(email, password) {
     signInWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
-            currentUser = userCredential.user;
-            console.log('User logged in:');
-            console.log({currentUser});
-            //callback(currentUser);
+            
         })
         .catch(error => {
-            //callback(null);
+            
         });
 }
 
 function logOut() {
-    console.log('Logging out user:');
-    console.log({currentUser});
     signOut(auth);
 }
 

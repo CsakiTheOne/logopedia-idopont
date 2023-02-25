@@ -1,13 +1,22 @@
 import LoginPage from "./pages/LoginPage";
-
-const user = null;
+import MainPage from './pages/MainPage';
+import { addOnAuthStateChangedListener } from "./firebase/auth";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    addOnAuthStateChangedListener(newUser => {
+      setUser(newUser);
+    });
+  }, []);
+
   if (user) {
-    return <p>Logged in</p>;
+    return <MainPage />;
   }
   else {
-    return <LoginPage/>;
+    return <LoginPage />;
   }
 }
 

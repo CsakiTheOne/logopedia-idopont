@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { logOut } from '../firebase/auth';
 import { getAbout } from '../firebase/rtdb';
+import Page from './Page';
 
 function MainPage() {
     const [aboutUs, setAboutUs] = useState('');
@@ -9,7 +10,7 @@ function MainPage() {
         getAbout(about => setAboutUs(about));
     }, []);
 
-    return <>
+    return <Page>
         <button onClick={() => {
             logOut();
         }}>
@@ -17,7 +18,7 @@ function MainPage() {
         </button>
         <br />
         <p>{aboutUs}</p>
-    </>;
+    </Page>;
 }
 
 export default MainPage;

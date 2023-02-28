@@ -4,6 +4,7 @@ import { addOnAuthStateChangedListener } from "./firebase/auth";
 import { useEffect, useState } from "react";
 import { userIsAdmin } from "./firebase/firestore";
 import AdminPage from "./pages/AdminPage";
+import { colorScheme } from './theme/theme';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,13 +18,20 @@ function App() {
     });
   }, []);
 
-  if (user) {
-    if (isAdmin) return <AdminPage />;
-    else return <MainPage />;
-  }
-  else {
-    return <LoginPage />;
-  }
+  document.body.style.backgroundColor = colorScheme.background;
+  document.body.style.color = colorScheme.onBackground;
+
+  return <div>
+    {
+      user
+        ? (
+          isAdmin
+            ? <AdminPage />
+            : <MainPage />
+        )
+        : <LoginPage />
+    }
+  </div>
 }
 
 export default App;

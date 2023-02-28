@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { logOut } from '../firebase/auth';
 import { getAbout, setAbout } from '../firebase/rtdb';
+import Page from './Page';
 
 function AdminPage() {
     const [aboutUs, setAboutUs] = useState('');
@@ -9,7 +10,7 @@ function AdminPage() {
         getAbout(about => setAboutUs(about));
     }, []);
 
-    return <>
+    return <Page>
         <p>{'Admin felület'}</p>
         <button onClick={() => {
             logOut();
@@ -25,7 +26,7 @@ function AdminPage() {
                 setAbout(event.target.value);
             }}
         />
-    </>;
+    </Page>;
 }
 
 export default AdminPage;

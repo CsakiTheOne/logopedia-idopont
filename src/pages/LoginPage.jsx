@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { register, logIn, logInGoogle } from '../firebase/auth';
 import store from '../store';
+import Page from './Page';
 
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    return <>
+    return <Page>
         <input type="email" value={email} onChange={event => setEmail(event.target.value)} />
         <br />
         <input type="password" value={password} onChange={event => setPassword(event.target.value)} />
@@ -25,7 +26,7 @@ function LoginPage() {
         <button onClick={() => {
             logInGoogle();
         }}>Bejelentkezés gyorsan, Google-el</button>
-    </>;
+    </Page>;
 }
 
 export default LoginPage;

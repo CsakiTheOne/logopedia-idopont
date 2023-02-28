@@ -5,9 +5,13 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signInWithRedirect,
 } from 'firebase/auth';
 
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 let onAuthStateChangedListeners = [];
 let currentUser = null;
 
@@ -33,25 +37,20 @@ function getCurrentUser() {
 }
 
 function register(email, password) {
-    createUserWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-            console.log('User registered:');
-            console.log({currentUser});
-            
-        })
-        .catch(error => {
-            
-        });
+    createUserWithEmailAndPassword(auth, email, password);
 }
 
 function logIn(email, password) {
-    signInWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-            
-        })
-        .catch(error => {
-            
-        });
+    signInWithEmailAndPassword(auth, email, password);
+}
+
+function logInGoogle(useRedirectInstead) {
+    if (useRedirectInstead) {
+        signInWithRedirect(auth, googleProvider);
+    }
+    else {
+        signInWithPopup(auth, googleProvider);
+    }
 }
 
 function logOut() {
@@ -65,5 +64,6 @@ export {
     getCurrentUser,
     register,
     logIn,
+    logInGoogle,
     logOut,
 };

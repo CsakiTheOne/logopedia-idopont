@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { register, logIn } from '../firebase/auth';
+import { register, logIn, logInGoogle } from '../firebase/auth';
 import store from '../store';
 
 function LoginPage() {
@@ -22,7 +22,9 @@ function LoginPage() {
             Bejelentkezés
         </button>
         <br />
-        <button disabled>Bejelentkezés gyorsan, Google-el</button>
+        <button onClick={() => {
+            logInGoogle();
+        }}>Bejelentkezés gyorsan, Google-el</button>
     </>;
 }
 

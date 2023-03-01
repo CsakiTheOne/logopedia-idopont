@@ -21,7 +21,7 @@ function App() {
   document.body.style.backgroundColor = colorScheme.background;
   document.body.style.color = colorScheme.onBackground;
 
-  return <div>
+  return <>
     {
       user
         ? (
@@ -31,7 +31,7 @@ function App() {
         )
         : <LoginPage />
     }
-  </div>
+  </>
 }
 
 export default App;

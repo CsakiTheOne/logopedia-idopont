@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react';
 import { logOut } from '../firebase/auth';
 import { getAbout, setAbout } from '../firebase/rtdb';
 import Page from './Page';
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    TextField,
+    Slider,
+    Card,
+    CardContent,
+    Box,
+} from '@mui/material';
 
 function AdminPage() {
     const [aboutUs, setAboutUs] = useState('');
@@ -10,30 +21,53 @@ function AdminPage() {
         getAbout(about => setAboutUs(about));
     }, []);
 
-    return <Page>
-        <h3>Admin felület</h3>
-        <button onClick={() => {
-            logOut();
-        }}>
-            Kijelentkezés
-        </button>
-        <h3>Időpont beállítások</h3>
-        <p>Munkaidő kezdete:</p>
-        <button>10:00</button>
-        <p>Munkaidő vége:</p>
-        <button>20:00</button>
-        <p>Felkészülési idő foglalkozások között:</p>
-        <button>00:30</button>
-        <h3>Rólam</h3>
-        <textarea
-            cols="32"
-            rows="8"
+    return <Page
+        header={
+            <AppBar position='static'>
+                <Toolbar>
+                    <Typography sx={{ flexGrow: 1 }}>Fanni Logopédia - Admin felület</Typography>
+                    <Button onClick={() => {
+                        logOut();
+                    }} color='inherit'>Kijelentkezés</Button>
+                </Toolbar>
+            </AppBar>
+        }
+    >
+        <Typography variant='h5'>Rólam</Typography>
+        <TextField
+            variant='filled'
+            label='Bemutatkozás és alapinfók'
             value={aboutUs}
             onChange={event => {
                 setAboutUs(event.target.value);
                 setAbout(event.target.value);
             }}
-        ></textarea>
+            multiline
+            minRows={3}
+        />
+        <Typography variant='h5'>Időpont beállítások</Typography>
+        <Card>
+            <CardContent>
+                <Typography>Munkaidő kezdete:</Typography>
+                <Box style={{marginInlineStart: 16, marginInlineEnd: 16}}>
+                <Slider
+                    marks={[{ value: 6, label: '6:00' }, { value: 10, label: '10:00' }]}
+                    min={6}
+                    max={10}
+                    valueLabelDisplay='auto'
+                />
+                </Box>
+                <Typography>Munkaidő vége:</Typography>
+                <Box style={{marginInlineStart: 16, marginInlineEnd: 16}}>
+                <Slider
+                    marks={[{ value: 14, label: '14:00' }, { value: 20, label: '20:00' }]}
+                    min={14}
+                    max={20}
+                    valueLabelDisplay='auto'
+                />
+                </Box>
+            </CardContent>
+        </Card>
     </Page>;
 }
 

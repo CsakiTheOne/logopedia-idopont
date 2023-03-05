@@ -25,6 +25,7 @@ function BookingPage() {
     const [activeStep, setActiveStep] = useState(0);
     const [works, setWorks] = useState([]);
     const [selectedWorkTitle, setSelectedWorkTitle] = useState('');
+    const [selectedTime, setSelectedTime] = useState('');
 
     useEffect(() => {
         getWorks(newWorks => {
@@ -102,10 +103,20 @@ function BookingPage() {
                 </StepContent>
             </Step>
             <Step>
-                <StepLabel>Idő</StepLabel>
+                <StepLabel>Idő: {selectedTime}</StepLabel>
                 <StepContent>
-                    <Typography>Szabad időpontok listája</Typography>
-                    <NavigationButtons />
+                    <List>
+                        <ListItemButton onClick={() => setSelectedTime('12:00')}>
+                            <ListItemText primary='12:00' />
+                        </ListItemButton>
+                        <ListItemButton onClick={() => setSelectedTime('14:00')}>
+                            <ListItemText primary='14:00' />
+                        </ListItemButton>
+                        <ListItemButton onClick={() => setSelectedTime('16:00')}>
+                            <ListItemText primary='16:00' />
+                        </ListItemButton>
+                    </List>
+                    <NavigationButtons nextEnabled={selectedTime !== ''} />
                 </StepContent>
             </Step>
             <Step>

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import { useState, useEffect } from 'react';
+import dayjs from 'dayjs';
 import { logOut } from '../firebase/auth';
+import { getWorks } from '../firebase/firestore';
 import Page from './Page';
 import {
     AppBar,
@@ -12,13 +13,33 @@ import {
     StepLabel,
     StepContent,
     Stack,
+    List,
+    ListItemText,
+    ListItemButton,
 } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function BookingPage() {
     const navigate = useNavigate();
     const [activeStep, setActiveStep] = useState(0);
+    const [works, setWorks] = useState([]);
+    const [selectedWorkTitle, setSelectedWorkTitle] = useState('');
+
+    useEffect(() => {
+        getWorks(newWorks => {
+            setWorks(newWorks.map(work => {
+                return <ListItemButton
+                    //selected={selectedWorkTitle === work.title}
+                    onClick={() => {
+                        setSelectedWorkTitle(work.title);
+                    }}
+                >
+                    <ListItemText primary={work.title} secondary={work.description} />
+                </ListItemButton>;
+            }));
+        });
+    }, []);
 
     function NavigationButtons(props) {
         return <Stack direction='row' justifyContent='flex-end' spacing={2}>
@@ -33,6 +54,7 @@ function BookingPage() {
                 {props.backLabel === undefined ? 'Vissza' : props.backLabel}
             </Button>
             <Button
+                disabled={props.nextEnabled !== undefined && !!props.nextEnabled === false}
                 variant="contained"
                 onClick={() => {
                     if (props.onNextClick === undefined) {
@@ -62,16 +84,17 @@ function BookingPage() {
 
         <Stepper activeStep={activeStep} orientation='vertical'>
             <Step>
-                <StepLabel>Foglalkozás</StepLabel>
+                <StepLabel>Foglalkozás: {selectedWorkTitle}</StepLabel>
                 <StepContent>
-                    <Typography>Foglalkozások listája</Typography>
-                    <NavigationButtons backLabel='Mégsem' onBackClick={() => navigate('/')} />
+                    <List>{works}</List>
+                    <NavigationButtons backLabel='Mégsem' onBackClick={() => navigate('/')} nextEnabled={selectedWorkTitle !== ''} />
                 </StepContent>
             </Step>
             <Step>
                 <StepLabel>Nap</StepLabel>
                 <StepContent>
                     <DateCalendar
+                        views={['day']}
                         minDate={dayjs().add(1, 'day')}
                         maxDate={dayjs().add(2, 'month')}
                     />

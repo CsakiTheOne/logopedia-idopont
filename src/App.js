@@ -14,26 +14,23 @@ import {
 
 function App() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
-    addOnAuthStateChangedListener(newUser => {
-      setIsAdmin(false);
-      setUser(newUser);
-      userIsAdmin(result => setIsAdmin(result));
+  function onAuthChanged(user) {
+    console.log('onAuthChanged: ' + user);
+    userIsAdmin(isAdmin => {
+      if (user) {
+        if (isAdmin) navigate('/admin');
+        else navigate('/');
+      }
+      else {
+        navigate('/login');
+      }
     });
-  }, []);
+  }
 
   useEffect(() => {
-    if (user) {
-      if (isAdmin) navigate('/admin');
-      else navigate('/');
-    }
-    else {
-      navigate('/login');
-    }
-  }, [navigate, user, isAdmin])
+    addOnAuthStateChangedListener(onAuthChanged);
+  }, []);
 
   return <Routes>
     <Route path='/' element={<MainPage />} />

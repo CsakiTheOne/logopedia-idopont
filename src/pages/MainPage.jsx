@@ -11,14 +11,21 @@ import {
     MenuItem,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
+    const navigate = useNavigate();
     const [aboutUs, setAboutUs] = useState('');
     const [worksMenuOpen, setWorksMenuOpen] = useState(null);
 
     useEffect(() => {
         getAbout(about => setAboutUs(about));
     }, []);
+
+    function handleWorkClick(event) {
+        setWorksMenuOpen(null);
+        navigate('/booking');
+    }
 
     return <Page
         header={
@@ -36,7 +43,7 @@ function MainPage() {
         <p>{aboutUs}</p>
         <Typography variant='h5'>Foglalkozásaim</Typography>
         <Button onClick={event => { setWorksMenuOpen(event.target); }} variant='contained' startIcon={<AddIcon/>}>
-            Új foglalkozás kérése
+            Új foglalkozás időpont kérése
         </Button>
         <Menu
         id="basic-menu"
@@ -48,9 +55,9 @@ function MainPage() {
         }}
       >
         {/* TODO replace with works from the database */}
-        <MenuItem onClick={() => { setWorksMenuOpen(null); }}>temp_work_a</MenuItem>
-        <MenuItem onClick={() => { setWorksMenuOpen(null); }}>temp_work_b</MenuItem>
-        <MenuItem onClick={() => { setWorksMenuOpen(null); }}>temp_work_c</MenuItem>
+        <MenuItem onClick={handleWorkClick}>temp_work_a</MenuItem>
+        <MenuItem onClick={handleWorkClick}>temp_work_b</MenuItem>
+        <MenuItem onClick={handleWorkClick}>temp_work_c</MenuItem>
       </Menu>
     </Page>;
 }

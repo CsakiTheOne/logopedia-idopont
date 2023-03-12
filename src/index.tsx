@@ -12,6 +12,18 @@ import App from './App';
 const theme = createTheme({
   palette: {
     mode: 'dark',
+  },
+  shape: {
+    borderRadius: 24,
+  },
+  components: {
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 24,
+        }
+      }
+    }
   }
 });
 

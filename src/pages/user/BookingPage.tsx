@@ -26,7 +26,9 @@ function BookingPage() {
     const navigate = useNavigate();
     const [activeStep, setActiveStep] = useState(0);
     const [works, setWorks] = useState<Work[]>([]);
+    const [times, setTimes] = useState<string[]>(['12:00', '14:00', '16:00']);
     const [selectedWorkTitle, setSelectedWorkTitle] = useState('');
+    const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
 
     useEffect(() => {
@@ -35,15 +37,7 @@ function BookingPage() {
         });
     }, []);
 
-    function NavigationButtons(
-        props: any/*{
-            onBackClick: (() => void) | undefined,
-            onNextClick: (() => void) | undefined,
-            backLabel: string | undefined,
-            nextLabel: string | undefined,
-            nextEnabled: boolean | undefined,
-        }*/
-        ) {
+    function NavigationButtons(props: any) {
         return <Stack direction='row' justifyContent='flex-end' spacing={2}>
             <Button
                 onClick={() => {
@@ -91,7 +85,6 @@ function BookingPage() {
                     <List>
                         {works.map(work => {
                             return <ListItemButton
-                                style={{ borderRadius: 8 }}
                                 selected={selectedWorkTitle === work.title}
                                 onClick={() => {
                                     setSelectedWorkTitle(work.title);
@@ -111,23 +104,34 @@ function BookingPage() {
                         views={['day']}
                         minDate={dayjs().add(1, 'day')}
                         maxDate={dayjs().add(2, 'month')}
+                        onChange={event => {
+                            const date = event?.format('YYYY-MM-DD');
+                            if (date) setSelectedDate(date);
+                        }}
                     />
-                    <NavigationButtons />
+                    <NavigationButtons nextEnabled={selectedDate !== ''} />
                 </StepContent>
             </Step>
             <Step>
                 <StepLabel>Idő: {selectedTime}</StepLabel>
                 <StepContent>
+                    <Typography>
+                        {works.find(w => w.title === selectedWorkTitle)?.durationMinutes} perces foglalkozást választottál.
+                    </Typography>
+                    <Typography>
+                        Elérhető időpontok {selectedDate} dátumra:
+                    </Typography>
                     <List>
-                        <ListItemButton onClick={() => setSelectedTime('12:00')}>
-                            <ListItemText primary='12:00' />
-                        </ListItemButton>
-                        <ListItemButton onClick={() => setSelectedTime('14:00')}>
-                            <ListItemText primary='14:00' />
-                        </ListItemButton>
-                        <ListItemButton onClick={() => setSelectedTime('16:00')}>
-                            <ListItemText primary='16:00' />
-                        </ListItemButton>
+                        {times.map(time => {
+                            return <ListItemButton
+                                selected={selectedTime === time}
+                                onClick={() => {
+                                    setSelectedTime(time);
+                                }}
+                            >
+                                <ListItemText primary={`🕑 ${time}`} />
+                            </ListItemButton>;
+                        })}
                     </List>
                     <NavigationButtons nextEnabled={selectedTime !== ''} />
                 </StepContent>
@@ -135,7 +139,9 @@ function BookingPage() {
             <Step>
                 <StepLabel>Foglalás</StepLabel>
                 <StepContent>
-                    <Typography>Összefoglalás küldés előtt</Typography>
+                    <Typography>Foglalkozás: {selectedWorkTitle}</Typography>
+                    <Typography>Dátum: {selectedDate}</Typography>
+                    <Typography>Idő: {selectedTime}</Typography>
                     <NavigationButtons nextLabel='Foglalás' onNextClick={() => { }} />
                 </StepContent>
             </Step>

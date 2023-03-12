@@ -21,6 +21,7 @@ import { DateCalendar } from '@mui/x-date-pickers';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import Work from '../../model/Work';
+import WorkDisplay from '../../components/WorkDisplay';
 
 function BookingPage() {
     const navigate = useNavigate();
@@ -83,16 +84,14 @@ function BookingPage() {
                 <StepLabel>Foglalkozás: {selectedWorkTitle}</StepLabel>
                 <StepContent>
                     <List>
-                        {works.map(work => {
-                            return <ListItemButton
-                                selected={selectedWorkTitle === work.title}
-                                onClick={() => {
-                                    setSelectedWorkTitle(work.title);
-                                }}
-                            >
-                                <ListItemText primary={`${work.title} - ${work.durationMinutes} perc`} secondary={work.description} />
-                            </ListItemButton>;
-                        })}
+                        {works.map(work => <WorkDisplay
+                            work={work}
+                            selected={selectedWorkTitle === work.title}
+                            onClick={() => {
+                                setSelectedWorkTitle(work.title);
+                            }}
+                        />
+                        )}
                     </List>
                     <NavigationButtons backLabel='Mégsem' onBackClick={() => navigate('/')} nextEnabled={selectedWorkTitle !== ''} />
                 </StepContent>

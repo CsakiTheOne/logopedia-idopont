@@ -1,4 +1,5 @@
 import { Container, Stack } from '@mui/material';
+import React from 'react';
 
 function Page(props: any) {
     return <div>

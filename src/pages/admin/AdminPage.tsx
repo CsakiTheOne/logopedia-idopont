@@ -13,6 +13,7 @@ import {
     CardContent,
     Box,
     List,
+    Stack,
 } from '@mui/material';
 import React from 'react';
 import { getWorks } from '../../firebase/firestore';
@@ -56,21 +57,23 @@ function AdminPage() {
         />
         <Typography variant='h5'>Foglalkozások</Typography>
         <List>
-            {works.map(work => <WorkDisplay
-                work={work}
-                selected={true}
-                onClick={() => {
-                    navigate(`/works/edit/${work.title}`);
-                }}
-            />
-            )}
-            <WorkDisplay
-                work={new Work('Új foglalkozás')}
-                selected={true}
-                onClick={() => {
-                    navigate(`/works/edit/Új foglalkozás`);
-                }}
-            />
+            <Stack spacing={2}>
+                {works.map(work => <WorkDisplay
+                    work={work}
+                    selected={true}
+                    onClick={() => {
+                        navigate(`/works/edit/${work.title}`);
+                    }}
+                />
+                )}
+                <WorkDisplay
+                    work={new Work('Új foglalkozás')}
+                    selected={true}
+                    onClick={() => {
+                        navigate(`/works/edit/Új foglalkozás`);
+                    }}
+                />
+            </Stack>
         </List>
         <Typography variant='h5'>Munkanap beállítások</Typography>
         <Card>

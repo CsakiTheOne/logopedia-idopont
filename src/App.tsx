@@ -40,7 +40,7 @@ function App() {
     <Route path='/login' element={<LoginPage />} />
     <Route path='/booking' element={<BookingPage />} />
     <Route path='/admin' element={<AdminPage />} />
-    <Route path='/works/edit/:title' element={<EditWorkPage />} />
+    <Route path='/works/edit/:workTitle' element={<EditWorkPage />} />
   </Routes>;
 }
 

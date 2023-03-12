@@ -13,15 +13,31 @@ import {
     CardContent,
     Box,
     List,
+    Stack,
 } from '@mui/material';
 import React from 'react';
 import { getWorks } from '../../firebase/firestore';
 import Work from '../../model/Work';
 import WorkDisplay from '../../components/WorkDisplay';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function EditWorkPage(props: any) {
-    const { title } = useParams();
+    const navigate = useNavigate();
+    const { workTitle } = useParams();
+    const [title, setTitle] = useState(workTitle);
+    const [desc, setDesc] = useState('');
+    const [durationMinuteText, setDurationMinutesText] = useState('');
+    
+    useEffect(() => {
+        getWorks(works => {
+            const work = works.find(w => w.title === workTitle);
+            if (work) {
+                setTitle(work.title);
+                setDesc(work.description);
+                setDurationMinutesText(work.durationMinutes.toString());
+            }
+        });
+    }, []);
 
     return <Page
         header={
@@ -37,6 +53,48 @@ function EditWorkPage(props: any) {
     >
         <Typography variant='h5'>{title}</Typography>
 
+        <TextField
+            variant='filled'
+            label='Cím'
+            value={title}
+            onChange={event => {
+                setTitle(event.target.value);
+            }}
+        />
+
+        <TextField
+            variant='filled'
+            label='Leírás'
+            value={desc}
+            onChange={event => {
+                setDesc(event.target.value);
+            }}
+            multiline
+            minRows={3}
+        />
+
+        <TextField
+            variant='filled'
+            label='Foglalkozás ideje (perc)'
+            type='number'
+            value={durationMinuteText}
+            onChange={event => {
+                setDurationMinutesText(event.target.value);
+            }}
+        />
+
+        <Stack direction='row' spacing={2}>
+            <Button sx={{ flexGrow: 1 }} onClick={() => {
+                navigate('/admin');
+            }}>
+                Vissza
+            </Button><Button variant='contained' sx={{ flexGrow: 1 }} onClick={() => {
+                //TODO: save work
+                navigate('/admin');
+            }}>
+                Mentés
+            </Button>
+        </Stack>
     </Page>;
 }
 

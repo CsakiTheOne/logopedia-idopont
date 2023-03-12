@@ -45,7 +45,9 @@ function AdminPage() {
             multiline
             minRows={3}
         />
-        <Typography variant='h5'>Időpont beállítások</Typography>
+        <Typography variant='h5'>Foglalkozások</Typography>
+        
+        <Typography variant='h5'>Munkanap beállítások</Typography>
         <Card>
             <CardContent>
                 <Typography>Munkaidő kezdete:</Typography>

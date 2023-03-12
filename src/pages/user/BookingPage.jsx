@@ -29,16 +29,7 @@ function BookingPage() {
 
     useEffect(() => {
         getWorks(newWorks => {
-            setWorks(newWorks.map(work => {
-                return <ListItemButton
-                    //selected={selectedWorkTitle === work.title}
-                    onClick={() => {
-                        setSelectedWorkTitle(work.title);
-                    }}
-                >
-                    <ListItemText primary={work.title} secondary={work.description} />
-                </ListItemButton>;
-            }));
+            setWorks(newWorks);
         });
     }, []);
 
@@ -87,7 +78,19 @@ function BookingPage() {
             <Step>
                 <StepLabel>Foglalkozás: {selectedWorkTitle}</StepLabel>
                 <StepContent>
-                    <List>{works}</List>
+                    <List>
+                        {works.map(work => {
+                            return <ListItemButton
+                                style={{ borderRadius: 8 }}
+                                selected={selectedWorkTitle === work.title}
+                                onClick={() => {
+                                    setSelectedWorkTitle(work.title);
+                                }}
+                            >
+                                <ListItemText primary={`${work.title} - ${work.durationMinutes} perc`} secondary={work.description} />
+                            </ListItemButton>;
+                        })}
+                    </List>
                     <NavigationButtons backLabel='Mégsem' onBackClick={() => navigate('/')} nextEnabled={selectedWorkTitle !== ''} />
                 </StepContent>
             </Step>

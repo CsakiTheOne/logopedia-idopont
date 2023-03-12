@@ -16,7 +16,7 @@ import {
     Stack,
 } from '@mui/material';
 import React from 'react';
-import { getWorks } from '../../firebase/firestore';
+import { deleteWork, getWorks, updateWork } from '../../firebase/firestore';
 import Work from '../../model/Work';
 import WorkDisplay from '../../components/WorkDisplay';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -24,10 +24,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 function EditWorkPage(props: any) {
     const navigate = useNavigate();
     const { workTitle } = useParams();
-    const [title, setTitle] = useState(workTitle);
+    const [title, setTitle] = useState(workTitle ? workTitle : '');
     const [desc, setDesc] = useState('');
     const [durationMinuteText, setDurationMinutesText] = useState('');
-    
+
     useEffect(() => {
         getWorks(works => {
             const work = works.find(w => w.title === workTitle);
@@ -88,13 +88,29 @@ function EditWorkPage(props: any) {
                 navigate('/admin');
             }}>
                 Vissza
-            </Button><Button variant='contained' sx={{ flexGrow: 1 }} onClick={() => {
-                //TODO: save work
-                navigate('/admin');
+            </Button>
+            <Button variant='contained' sx={{ flexGrow: 1 }} onClick={() => {
+                updateWork(
+                    new Work(title, desc, Number.parseInt(durationMinuteText)),
+                    workTitle,
+                    isSuccesful => {
+                        navigate('/admin');
+                    }
+                );
             }}>
                 Mentés
             </Button>
         </Stack>
+        <Button color='error' onClick={() => {
+            deleteWork(
+                workTitle,
+                isSuccesful => {
+                    navigate('/admin');
+                }
+            );
+        }}>
+            Törlés
+        </Button>
     </Page>;
 }
 

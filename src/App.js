@@ -1,10 +1,10 @@
 import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/user/MainPage';
 import { addOnAuthStateChangedListener } from './firebase/auth';
 import { useEffect, useState } from 'react';
 import { userIsAdmin } from './firebase/firestore';
-import AdminPage from './pages/AdminPage';
-import BookingPage from './pages/BookingPage';
+import AdminPage from './pages/admin/AdminPage';
+import BookingPage from './pages/user/BookingPage';
 import {
   Routes,
   Route,

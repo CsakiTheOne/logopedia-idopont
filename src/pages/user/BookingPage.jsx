@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { logOut } from '../firebase/auth';
-import { getWorks } from '../firebase/firestore';
-import Page from './Page';
+import { logOut } from '../../firebase/auth';
+import { getWorks } from '../../firebase/firestore';
+import Page from '../Page';
 import {
     AppBar,
     Toolbar,

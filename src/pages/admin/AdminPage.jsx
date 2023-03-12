@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { logOut } from '../firebase/auth';
-import { getAbout, setAbout } from '../firebase/rtdb';
-import Page from './Page';
+import { logOut } from '../../firebase/auth';
+import { getAbout, setAbout } from '../../firebase/rtdb';
+import Page from '../Page';
 import {
     AppBar,
     Toolbar,

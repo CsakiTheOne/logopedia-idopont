@@ -13,6 +13,7 @@ import {
     CardContent,
     Box,
 } from '@mui/material';
+import React from 'react';
 
 function AdminPage() {
     const [aboutUs, setAboutUs] = useState('');

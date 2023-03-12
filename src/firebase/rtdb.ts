@@ -5,13 +5,13 @@ const dbRef = ref(getDatabase(app));
 
 const pathAbout = 'meta/about';
 
-function getAbout(callback) {
+function getAbout(callback: (about: string) => void) {
     get(child(dbRef, pathAbout))
         .then(snapshot => callback(snapshot.val()))
         .catch(error => callback(''));
 }
 
-function setAbout(value) {
+function setAbout(value: string) {
     set(child(dbRef, pathAbout), value);
 }
 

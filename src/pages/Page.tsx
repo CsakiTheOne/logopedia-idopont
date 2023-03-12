@@ -1,6 +1,6 @@
 import { Container, Stack } from '@mui/material';
 
-function Page(props) {
+function Page(props: any) {
     return <div>
         {props.header}
         <Container style={{paddingTop: 16}}>

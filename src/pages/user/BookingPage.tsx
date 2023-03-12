@@ -19,11 +19,13 @@ import {
 } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import Work from '../../model/Work';
 
 function BookingPage() {
     const navigate = useNavigate();
     const [activeStep, setActiveStep] = useState(0);
-    const [works, setWorks] = useState([]);
+    const [works, setWorks] = useState<Work[]>([]);
     const [selectedWorkTitle, setSelectedWorkTitle] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
 
@@ -33,7 +35,15 @@ function BookingPage() {
         });
     }, []);
 
-    function NavigationButtons(props) {
+    function NavigationButtons(
+        props: any/*{
+            onBackClick: (() => void) | undefined,
+            onNextClick: (() => void) | undefined,
+            backLabel: string | undefined,
+            nextLabel: string | undefined,
+            nextEnabled: boolean | undefined,
+        }*/
+        ) {
         return <Stack direction='row' justifyContent='flex-end' spacing={2}>
             <Button
                 onClick={() => {

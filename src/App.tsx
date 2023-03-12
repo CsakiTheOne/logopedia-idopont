@@ -11,11 +11,13 @@ import {
   Link,
   useNavigate,
 } from 'react-router-dom';
+import React from 'react';
+import { User } from 'firebase/auth';
 
 function App() {
   const navigate = useNavigate();
 
-  function onAuthChanged(user) {
+  function onAuthChanged(user: User | null) {
     console.log('onAuthChanged: ' + user);
     userIsAdmin(isAdmin => {
       if (user) {

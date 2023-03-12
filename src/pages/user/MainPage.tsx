@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 function MainPage() {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ function MainPage() {
         <Typography variant='h5'>Fanniról</Typography>
         <p>{aboutUs}</p>
         <Typography variant='h5'>Foglalkozásaim</Typography>
-        <Button onClick={() => navigate('/booking')} variant='contained' startIcon={<AddIcon/>}>
+        <Button onClick={() => navigate('/booking')} variant='contained' startIcon={<AddIcon />}>
             Új foglalkozás időpont kérése
         </Button>
     </Page>;

@@ -8,43 +8,44 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
     signInWithRedirect,
+    User,
 } from 'firebase/auth';
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-let onAuthStateChangedListeners = [];
-let currentUser = null;
+let onAuthStateChangedListeners: ((user: User | null) => void)[] = [];
+let currentUser: User | null = null;
 
 onAuthStateChanged(auth, user => {
     currentUser = user;
     onAuthStateChangedListeners.forEach(listener => listener(user));
 });
 
-function addOnAuthStateChangedListener(listener) {
+function addOnAuthStateChangedListener(listener: (user: User | null) => void) {
     onAuthStateChangedListeners.push(listener);
 }
 
-function removeOnAuthStateChangedListener(listener) {
-    onAuthStateChangedListeners.pop(listener);
+function removeOnAuthStateChangedListener(listener: (user: User | null) => void) {
+    onAuthStateChangedListeners.filter(l => l !== listener);
 }
 
 function removeAllOnAuthStateChangedListeners() {
     onAuthStateChangedListeners = [];
 }
 
-function getCurrentUser() {
+function getCurrentUser(): User | null {
     return currentUser;
 }
 
-function register(email, password) {
+function register(email: string, password: string) {
     createUserWithEmailAndPassword(auth, email, password);
 }
 
-function logIn(email, password) {
+function logIn(email: string, password: string) {
     signInWithEmailAndPassword(auth, email, password);
 }
 
-function logInGoogle(useRedirectInstead) {
+function logInGoogle(useRedirectInstead: boolean = false) {
     if (useRedirectInstead) {
         signInWithRedirect(auth, googleProvider);
     }

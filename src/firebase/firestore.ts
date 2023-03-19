@@ -95,6 +95,38 @@ export function getAppointments(callback: (appointments: Appointment[]) => void)
         });
 }
 
+export function getAppointmentsByUser(userId: string, callback: (appointments: Appointment[]) => void) {
+    const q = query(collection(db, 'appointments'), where('userId', '==', userId));
+    getDocs(q)
+        .then(querySnapshot => {
+            const appointments: Appointment[] = [];
+            querySnapshot.forEach(document => {
+                appointments.push({ ...new Appointment(document.id, '', '', '', ''), ...document.data() });
+            });
+            callback(appointments);
+        })
+        .catch(error => {
+            console.error(error);
+            callback([]);
+        });
+}
+
+export function getAppointmentsByDate(date: string, callback: (appointments: Appointment[]) => void) {
+    const q = query(collection(db, 'appointments'), where('date', '==', date));
+    getDocs(q)
+        .then(querySnapshot => {
+            const appointments: Appointment[] = [];
+            querySnapshot.forEach(document => {
+                appointments.push({ ...new Appointment(document.id, '', '', '', ''), ...document.data() });
+            });
+            callback(appointments);
+        })
+        .catch(error => {
+            console.error(error);
+            callback([]);
+        });
+}
+
 export function updateAppointment(appointment: Appointment, oldId: string | undefined, callback: (isSuccesful: boolean) => void) {
     if (oldId) {
         updateDoc(doc(db, 'works', oldId), { ...appointment })

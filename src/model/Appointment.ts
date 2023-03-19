@@ -1,13 +1,13 @@
 export default class Appointment {
     id: string;
-    username: string;
+    userId: string;
     workTitle: string;
     date: string;
     startTime: string;
     
-    constructor(id: string, username: string, workTitle: string, date: string, startTime: string) {
+    constructor(id: string, userId: string, workTitle: string, date: string, startTime: string) {
         this.id = id;
-        this.username = username;
+        this.userId = userId;
         this.workTitle = workTitle;
         this.date = date;
         this.startTime = startTime;

@@ -2,9 +2,13 @@ import { app } from './firebase';
 import { getCurrentUser } from './auth';
 import { getFirestore, doc, getDoc, getDocs, collection, query, where, updateDoc, QueryDocumentSnapshot, DocumentData, DocumentReference, addDoc, deleteDoc } from 'firebase/firestore';
 import Work from '../model/Work';
+import Appointment from '../model/Appointment';
 
 const db = getFirestore(app);
 
+//
+// User
+//
 export function userIsAdmin(callback: (isAdmin: boolean) => void) {
     if (getCurrentUser() == null) {
         callback(false);
@@ -24,12 +28,15 @@ export function userIsAdmin(callback: (isAdmin: boolean) => void) {
         });
 }
 
+//
+// Works
+//
 export function getWorks(callback: (works: Work[]) => void) {
     getDocs(collection(db, 'works'))
         .then(querySnapshot => {
             const works: Work[] = [];
             querySnapshot.forEach(document => {
-                works.push(Work.fromDocumentData(document.data()));
+                works.push({ ...new Work(''), ...document.data() });
             });
             callback(works);
         })
@@ -68,4 +75,45 @@ export function deleteWork(title: string | undefined, callback: (isSuccesful: bo
             .then(() => callback(true))
             .catch(() => callback(false));
     });
+}
+
+//
+// Appointments
+//
+export function getAppointments(callback: (appointments: Appointment[]) => void) {
+    getDocs(collection(db, 'appointments'))
+        .then(querySnapshot => {
+            const appointments: Appointment[] = [];
+            querySnapshot.forEach(document => {
+                appointments.push({ ...new Appointment(document.id, '', '', '', ''), ...document.data() });
+            });
+            callback(appointments);
+        })
+        .catch(error => {
+            console.error(error);
+            callback([]);
+        });
+}
+
+export function updateAppointment(appointment: Appointment, oldId: string | undefined, callback: (isSuccesful: boolean) => void) {
+    if (oldId) {
+        updateDoc(doc(db, 'works', oldId), { ...appointment })
+            .then(() => callback(true))
+            .catch(() => callback(false));
+    }
+    else {
+        addDoc(collection(db, 'works'), { ...appointment })
+            .then(() => callback(true))
+            .catch(() => callback(false));
+    }
+}
+
+export function deleteAppointment(id: string | undefined, callback: (isSuccesful: boolean) => void) {
+    if (!id) {
+        callback(false);
+        return;
+    }
+    deleteDoc(doc(db, 'appointments', id))
+        .then(() => callback(true))
+        .catch(() => callback(false));
 }

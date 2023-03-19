@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { logOut } from '../../firebase/auth';
 import { getWorks } from '../../firebase/firestore';
-import Page from '../Page';
+import Page from '../../components/Page';
 import {
     AppBar,
     Toolbar,

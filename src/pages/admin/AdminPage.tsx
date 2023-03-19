@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { logOut } from '../../firebase/auth';
 import { getAbout, setAbout } from '../../firebase/rtdb';
-import Page from '../Page';
+import Page from '../../components/Page';
 import {
     AppBar,
     Toolbar,
@@ -20,6 +20,8 @@ import { getWorks } from '../../firebase/firestore';
 import Work from '../../model/Work';
 import WorkDisplay from '../../components/WorkDisplay';
 import { useNavigate } from 'react-router-dom';
+import { DateCalendar } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 
 function AdminPage() {
     const navigate = useNavigate();
@@ -43,17 +45,14 @@ function AdminPage() {
             </AppBar>
         }
     >
-        <Typography variant='h5'>Rólam</Typography>
-        <TextField
-            variant='filled'
-            label='Bemutatkozás és alapinfók'
-            value={aboutUs}
+        <Typography variant='h5'>Időpontok</Typography>
+        <DateCalendar
+            views={['day']}
+            minDate={dayjs().add(1, 'day')}
+            maxDate={dayjs().add(2, 'month')}
             onChange={event => {
-                setAboutUs(event.target.value);
-                setAbout(event.target.value);
+                
             }}
-            multiline
-            minRows={3}
         />
         <Typography variant='h5'>Foglalkozások</Typography>
         <List>
@@ -75,7 +74,20 @@ function AdminPage() {
                 />
             </Stack>
         </List>
-        <Typography variant='h5'>Munkanap beállítások</Typography>
+        <Typography variant='h5'>Beállítások</Typography>
+        <Typography variant='h6'>Rólam</Typography>
+        <TextField
+            variant='filled'
+            label='Bemutatkozás és alapinfók'
+            value={aboutUs}
+            onChange={event => {
+                setAboutUs(event.target.value);
+                setAbout(event.target.value);
+            }}
+            multiline
+            minRows={3}
+        />
+        <Typography variant='h6'>Munkaidő</Typography>
         <Card>
             <CardContent>
                 <Typography>Munkaidő kezdete:</Typography>

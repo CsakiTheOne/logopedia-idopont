@@ -8,10 +8,17 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { orange } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
+    primary: {
+      main: '#7e769a',
+    },
+    background: {
+      default: orange[100]
+    }
   },
   shape: {
     borderRadius: 24,

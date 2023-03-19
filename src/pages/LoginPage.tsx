@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { register, logIn, logInGoogle } from '../firebase/auth';
-import Page from './Page';
+import Page from '../components/Page';
 import {
     AppBar,
     Toolbar,

@@ -32,6 +32,10 @@ az 1)-es fejezettel lehet később is szívni
 
 ## 1. Piackutatás, szakirodalmi kutatás
 
+### Mobil eszközök és operációs rendszereik
+
+### Alkalmazás típusok (PWA, natív app és webapp összehasonlítása)
+
 > ide jöhet minden a pwa-ról, a mobileszközök és a mobilfejlesztés fejlődéséről, mobileszközök használatáról és mobil OS felhasználásokról statisztikák, ábrák, stb.
 > jó lenne, ha lenne néhány cikk feldolgozás is mögötte (sciencedircet, researchgate, etc.)
 

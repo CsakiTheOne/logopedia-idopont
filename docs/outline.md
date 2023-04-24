@@ -1,5 +1,9 @@
 # Outline
 
+Fájl neve: `2022-23_2_Csáktornyai Ádám_GWBTSU_Szakdolgozat`
+
+## Témavezető által megadott instrukciók
+
 ```
 én a következőt tenném...
 
@@ -24,49 +28,49 @@ abból is sz*r kiesni
 az 1)-es fejezettel lehet később is szívni
 ```
 
-## Bevezető (sorszám nélkül)
+### Bevezető (sorszám nélkül)
 
 1-1.5 oldal
 
 > pozícionálja a szakdolgozatod témakörét, motivációját, a fejezeteket előre vetíti, stb...
 
-## 1. Piackutatás, szakirodalmi kutatás
+### 1. Piackutatás, szakirodalmi kutatás
 
-### Mobil eszközök és operációs rendszereik
+#### Mobil eszközök és operációs rendszereik
 
-### Alkalmazás típusok (PWA, natív app és webapp összehasonlítása)
+#### Alkalmazás típusok (PWA, natív app és webapp összehasonlítása)
 
 > ide jöhet minden a pwa-ról, a mobileszközök és a mobilfejlesztés fejlődéséről, mobileszközök használatáról és mobil OS felhasználásokról statisztikák, ábrák, stb.
 > jó lenne, ha lenne néhány cikk feldolgozás is mögötte (sciencedircet, researchgate, etc.)
 
-## 2. A logopédiai folyamatok támogatását megvalósító alkalmazás problémadefiníciója (vagy valami ilyesmi)
+### 2. A logopédiai folyamatok támogatását megvalósító alkalmazás problémadefiníciója (vagy valami ilyesmi)
 
 > ide jöhet egyrészt általánosan a logopédiai folyamatokról, nyugodtan lehet bő lére ereszteni, mert minden fejezet legalább 4-5 oldal kell, hogy legyen, másrészt az ezekből levezett alkalmazással szemben támasztott követelmények, szolgáltatások összessége, akár use case diagram, esetleg use case táblázatok (csak ha vinni kell a helyet)
 
-## 3. Technológiai háttér
+### 3. Technológiai háttér
 
 > ide minden, ami általánosan leírja a felhasznált technológiákat: pwa, react, adatbázis, firebase és annak szolgáltatásai, stb... minden, ami általános technológia
 
-### Fejlesztéshez használt technológiák
+#### Fejlesztéshez használt technológiák
 
-### Egyéb felhasznált / fontos technológiák
+#### Egyéb felhasznált / fontos technológiák
 
-## 4. Fejlesztői dokumentáció
+### 4. Fejlesztői dokumentáció
 
 > kódok és összekötő szövegek, maga a fejlesztés
 
-## 5. Felhasználói dokumentáció
+### 5. Felhasználói dokumentáció
 
 - kinézet / képernyőképek
 - részletes bemutatás, útmutatók
 
 > ha ide kattintok, akkor ez történik, ha oda, akkor az, az időpontfoglalás blablabla
 
-## 6. Összefoglalás
+### 6. Összefoglalás
 
 Kb. 1 oldal
 
-## Hivatkozások
+### Hivatkozások
 
 ```
 az 1) fejezetbe kell összegyűjteni a szakirodalmazásos dolgokhoz a szövegközi hivatkozásokat
@@ -86,4 +90,33 @@ Hivatkozások
 erre talán a sablonban van iránymutatás
 ```
 
-## Mellékletek
+### Mellékletek
+
+## ChatGPT által készített TODO lista
+
+- [ ] Bevezető
+  - [ ] Témakör pozícionálása
+  - [ ] Motiváció bemutatása
+  - [ ] Fejezetek előre vetítése
+- [ ] Piackutatás, szakirodalmi kutatás
+  - [ ] Mobileszközök és mobilfejlesztés fejlődése
+  - [ ] Mobileszközök használatának és mobil OS felhasználásoknak statisztikái és trendjei
+  - [ ] PWA-k áttekintése
+- [ ] A logopédiai folyamatok támogatását megvalósító alkalmazás problémadefiníciója
+  - [ ] Logopédiai folyamatok áttekintése
+  - [ ] Időpontfoglalás jelentősége a logopédiai folyamatokban
+  - [ ] Hiányosságok az időpontfoglalási rendszerekben
+- [ ] Technológiai háttér
+  - [ ] Fejlesztői eszközök bemutatása
+  - [ ] Felhasznált programozási nyelvek és technológiák
+  - [ ] PWA fejlesztési folyamata és lehetőségei
+- [ ] Fejlesztői dokumentáció
+  - [ ] Követelmények és funkcionális specifikáció
+  - [ ] Rendszerterv és architektúra
+  - [ ] Adatmodell
+  - [ ] Fejlesztési folyamat és tesztelési eljárások
+- [ ] Felhasználói dokumentáció
+  - [ ] Alkalmazás használati útmutatója
+  - [ ] Felhasználói felület tervezése és funkcionalitása
+  - [ ] Hibaelhárítás és támogatás
+- [ ] Összefoglalás

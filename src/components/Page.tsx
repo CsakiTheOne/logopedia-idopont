@@ -1,5 +1,6 @@
 import { Container, Stack } from '@mui/material';
 import React from 'react';
+import Footer from './Footer';
 
 function Page(props: any) {
     return <div>
@@ -9,6 +10,7 @@ function Page(props: any) {
                 {props.children}
             </Stack>
         </Container>
+        <Footer />
     </div>;
 }
 

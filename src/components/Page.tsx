@@ -4,7 +4,7 @@ import React from 'react';
 function Page(props: any) {
     return <div>
         {props.header}
-        <Container style={{paddingTop: 16}} maxWidth='md'>
+        <Container style={{paddingTop: 16}} maxWidth='sm'>
             <Stack spacing={2}>
                 {props.children}
             </Stack>

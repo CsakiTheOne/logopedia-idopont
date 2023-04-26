@@ -62,7 +62,8 @@ function MainPage() {
             </>
         }
     >
-        <p>{aboutUs}</p>
+        <Typography variant='h5'>Rólam</Typography>
+        <Typography>{aboutUs}</Typography>
         {
             isLoggedIn ?
                 <>
@@ -72,6 +73,7 @@ function MainPage() {
                     </Button>
                 </> :
                 <>
+                    <Typography variant='h5'>Időpont foglaláshoz és eszköz kölcsönzéshez jelentkezz be!</Typography>
                     <LoginCard />
                     <Typography variant='h5'>Szolgáltatások</Typography>
                     <List>

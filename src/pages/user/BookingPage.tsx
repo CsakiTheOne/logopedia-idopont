@@ -85,6 +85,7 @@ function BookingPage() {
                 <StepContent>
                     <List>
                         {works.map(work => <WorkDisplay
+                            showTime
                             work={work}
                             selected={selectedWorkTitle === work.title}
                             onClick={() => {

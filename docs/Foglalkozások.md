@@ -8,11 +8,11 @@
 
 Gyerekeknek, akik...
 
-- 2-2,5 éves korban még nem beszélnek,
-- 50 szónál kisebb a szókincsük, mely nem bővül,
-- nem használnak szókapcsolatokat,
-- beszédükben szótöredékek, halandzsaszavak fordulnak elő,
-- környezetükkel nehezen kommunikálnak
+- 2-2,5 éves korban még nem beszélnek
+- 50 szónál kisebb a szókincsük, mely nem bővül
+- nem használnak szókapcsolatokat
+- beszédükben szótöredékek, halandzsaszavak fordulnak elő
+- környezetükkel nehezen kommunikálna
 
 ## Artikulációs zavar, közismertebb nevén pöszeség terápiája
 

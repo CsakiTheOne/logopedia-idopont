@@ -6,8 +6,7 @@ function WorkDisplay(props: any) {
         onClick={props.onClick}
     >
         <ListItemText
-            primary={`${props.work.title}${props.work.durationMinutes > 0 ? ' - ' + props.work.durationMinutes + ' perc' : ''}`}
-            secondary={props.work.description}
+            primary={`${props.work.title}${props.work.durationMinutes > 0 && props.showTime ? ' - ' + props.work.durationMinutes + ' perc' : ''}`}
         />
     </ListItemButton>;
 }

@@ -51,13 +51,14 @@ function AdminPage() {
             minDate={dayjs().add(1, 'day')}
             maxDate={dayjs().add(2, 'month')}
             onChange={event => {
-                
+
             }}
         />
         <Typography variant='h5'>Foglalkozások</Typography>
         <List>
             <Stack spacing={2}>
                 {works.map(work => <WorkDisplay
+                    showTime
                     work={work}
                     selected={true}
                     onClick={() => {

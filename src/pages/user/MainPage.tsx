@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { addOnAuthStateChangedListener, logOut } from '../../firebase/auth';
+import { addOnAuthStateChangedListener, getCurrentUser, logOut } from '../../firebase/auth';
 import { getAbout } from '../../firebase/rtdb';
 import Page from '../../components/Page';
 import {
@@ -9,6 +9,10 @@ import {
     Button,
     List,
     Stack,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogActions,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
@@ -26,9 +30,13 @@ function MainPage() {
     const [works, setWorks] = useState<Work[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    const [selectedWork, setSelectedWork] = useState<Work | null>(null);
+
     useEffect(() => {
         getAbout(about => setAboutUs(about));
         getWorks(newWorks => setWorks(newWorks));
+
+        setIsLoggedIn(!!getCurrentUser());
 
         function onAuthChanged(user: User | null) {
             setIsLoggedIn(!!user);
@@ -62,17 +70,32 @@ function MainPage() {
             </>
         }
     >
-        <Typography variant='h5'>Rólam</Typography>
-        <Typography>{aboutUs}</Typography>
+        {
+            <Dialog open={selectedWork !== null} onClose={() => setSelectedWork(null)}>
+                <DialogTitle>{selectedWork?.title}</DialogTitle>
+                <DialogContent dangerouslySetInnerHTML={{ __html: selectedWork ? selectedWork.description.replace("\n", "<br/>") : '' }}></DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setSelectedWork(null)} autoFocus>
+                        Bezárás
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        }
         {
             isLoggedIn ?
                 <>
+                    <Typography variant='h5'>Fejlesztő eszközök, játékok és könyvek</Typography>
+                    <Button onClick={() => navigate('/loan')} variant='contained'>
+                        Böngészés
+                    </Button>
                     <Typography variant='h5'>Foglalkozásaim</Typography>
                     <Button onClick={() => navigate('/booking')} variant='contained' startIcon={<AddIcon />}>
                         Új foglalkozás időpont kérése
                     </Button>
                 </> :
                 <>
+                    <Typography variant='h5'>Rólam</Typography>
+                    <Typography>{aboutUs}</Typography>
                     <Typography variant='h5'>Időpont foglaláshoz és eszköz kölcsönzéshez jelentkezz be!</Typography>
                     <LoginCard />
                     <Typography variant='h5'>Szolgáltatások</Typography>
@@ -81,7 +104,7 @@ function MainPage() {
                             {works.map(work => <WorkDisplay
                                 work={work}
                                 selected={true}
-                                onClick={() => { alert(work.description); }}
+                                onClick={() => { setSelectedWork(work); }}
                             />
                             )}
                         </Stack>

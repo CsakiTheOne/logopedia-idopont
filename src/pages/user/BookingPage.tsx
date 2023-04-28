@@ -102,7 +102,7 @@ function BookingPage() {
                 <StepContent>
                     <DateCalendar
                         views={['day']}
-                        minDate={dayjs().add(1, 'day')}
+                        minDate={dayjs().add(2, 'day')}
                         maxDate={dayjs().add(2, 'month')}
                         onChange={event => {
                             const date = event?.format('YYYY-MM-DD');

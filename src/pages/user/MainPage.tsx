@@ -38,11 +38,7 @@ function MainPage() {
 
         setIsLoggedIn(!!getCurrentUser());
 
-        function onAuthChanged(user: User | null) {
-            setIsLoggedIn(!!user);
-        }
-
-        addOnAuthStateChangedListener(onAuthChanged);
+        addOnAuthStateChangedListener(user => setIsLoggedIn(!!user));
     }, []);
 
     return <Page

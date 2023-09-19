@@ -1,14 +1,22 @@
 # TODO
 
-## Fejlesztő eszközök és ajánlott irodalmak
-
-- [ ] "Pedagógusoknak" vagy valami hasonló nevű menüpont
-- [ ] webshop kinézetű felület 3 fő kategóriával
-  - fejlesztő játékok (amiket nővérem készített vagy ajánl)
-  - könyvek, dokumentumok, ajánlott irodalom (akár könyv, akár PDF formátumban)
-  - digitális fejlesztő eszközök (appok, játékok, amiket a gyerekeknek lehet adni)
-
-Minden elemnél lenne valamilyen leírás, kép és esetleg URL, hogy honnan szerezhető be. A PDF formátumú irodalmak letölthetőek és rögtön az alkalmazásban megtekinthetőek lesznek.
+- alapok
+  - [x] PWA funkciók
+    - [x] metaadatok
+    - [x] service worker
+    - [x] eszközre telapítés
+  - [x] főoldal
+- időpont foglalás
+  - [x] foglaló felület
+  - [x] saját foglalkozások foglalása, törlése
+  - [x] felhasználók foglalásainak megtekintése
+  - [x] foglalkozások kezelése (létrehozás, törlés, szerkesztés)
+  - [ ] foglalkozások hozzárendelése felhaználókhoz
+  - [ ] bonyolultabb szabályok a foglaláshoz
+- tárgy kölcsönzés
+  - [ ] felület
+  - [ ] kölcsönözhető elemek kezelése
+  - [ ] kölcsönzés logika
 
 ## Foglalkozások kiosztása felhasználóknak
 

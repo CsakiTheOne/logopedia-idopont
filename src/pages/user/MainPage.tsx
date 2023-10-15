@@ -21,10 +21,11 @@ import { User } from 'firebase/auth';
 import LoginCard from '../../components/LoginCard';
 import banner from '../../media/banner.png';
 import WorkDisplay from '../../components/WorkDisplay';
-import { getAppointmentsByUser, getWorks } from '../../firebase/firestore';
+import { deleteAppointment, getAppointmentsByUser, getWorks } from '../../firebase/firestore';
 import Work from '../../model/Work';
 import Appointment from '../../model/Appointment';
 import AppointmentDisplay from '../../components/AppointmentDisplay';
+import { deleteApp } from 'firebase/app';
 
 function MainPage() {
     const navigate = useNavigate();
@@ -97,7 +98,17 @@ function MainPage() {
                             return <AppointmentDisplay
                                 appointment={appointment}
                                 onClick={() => {
-                                    //TODO:
+                                    const ans = prompt('Le szeretnéd mondani ezt az időpontot? Ha igen, írd be, hogy "lemondás"');
+                                    if (ans === 'lemondás') {
+                                        deleteAppointment(appointment.id, isSuccesful => {
+                                            if (isSuccesful) {
+                                                window.location.reload();
+                                            }
+                                            else {
+                                                alert('Sikertelen lemondás! Próbáld újra később!');
+                                            }
+                                        });
+                                    }
                                 }}
                             />;
                         })

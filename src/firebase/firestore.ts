@@ -149,3 +149,20 @@ export function deleteAppointment(id: string | undefined, callback: (isSuccesful
         .then(() => callback(true))
         .catch(() => callback(false));
 }
+
+//
+// Time
+//
+
+/**
+ * This function returns the available times for a given date based on the selected work's duration.
+ * @param date The day when the user wants to make an appointment.
+ * @param workDuration The duration of the selected work.
+ * @param callback The callback function that will be called with the available times.
+ */
+export function getFreeTimes(date: string, workDuration: number, callback: (times: string[]) => void) {
+    getAppointmentsByDate(date, (appointments) => {
+        //TODO: figure out times based on the incoming data
+        callback(['10:00', '11:00', '12:00', '13:00', '14:00', '15:00']);
+    });
+}

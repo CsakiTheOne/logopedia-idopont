@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { logOut } from '../../firebase/auth';
-import { getWorks } from '../../firebase/firestore';
+import { getFreeTimes, getWorks } from '../../firebase/firestore';
 import Page from '../../components/Page';
 import {
     AppBar,
@@ -27,7 +27,7 @@ function BookingPage() {
     const navigate = useNavigate();
     const [activeStep, setActiveStep] = useState(0);
     const [works, setWorks] = useState<Work[]>([]);
-    const [times, setTimes] = useState<string[]>(['12:00', '14:00', '16:00']);
+    const [times, setTimes] = useState<string[]>([]);
     const [selectedWorkTitle, setSelectedWorkTitle] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
@@ -37,6 +37,14 @@ function BookingPage() {
             setWorks(newWorks);
         });
     }, []);
+
+    useEffect(() => {
+        const selectedDuration = works.find(w => w.title === selectedWorkTitle)?.durationMinutes;
+        if (selectedDuration === undefined) return;
+        getFreeTimes(selectedDate, selectedDuration, newTimes => {
+            setTimes(newTimes);
+        });
+    }, [selectedDate, selectedWorkTitle, works]);
 
     function NavigationButtons(props: any) {
         return <Stack direction='row' justifyContent='flex-end' spacing={2}>

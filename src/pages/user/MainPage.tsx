@@ -81,7 +81,7 @@ function MainPage() {
             isLoggedIn ?
                 <>
                     <Typography variant='h5'>Fejlesztő eszközök, játékok és könyvek</Typography>
-                    <Button onClick={() => navigate('/loan')} variant='contained'>
+                    <Button onClick={() => navigate('/rental')} variant='contained'>
                         Böngészés
                     </Button>
                     <Typography variant='h5'>Foglalkozásaim</Typography>

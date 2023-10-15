@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { logOut } from '../../firebase/auth';
-import { getFreeTimes, getWorks } from '../../firebase/firestore';
+import { getCurrentUser, logOut } from '../../firebase/auth';
+import { getFreeTimes, getWorks, updateAppointment } from '../../firebase/firestore';
 import Page from '../../components/Page';
 import {
     AppBar,
@@ -22,6 +22,8 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import Work from '../../model/Work';
 import WorkDisplay from '../../components/WorkDisplay';
+import Appointment from '../../model/Appointment';
+import { get } from 'http';
 
 function BookingPage() {
     const navigate = useNavigate();
@@ -130,16 +132,20 @@ function BookingPage() {
                         Elérhető időpontok {selectedDate} dátumra:
                     </Typography>
                     <List>
-                        {times.map(time => {
-                            return <ListItemButton
-                                selected={selectedTime === time}
-                                onClick={() => {
-                                    setSelectedTime(time);
-                                }}
-                            >
-                                <ListItemText primary={`🕑 ${time}`} />
-                            </ListItemButton>;
-                        })}
+                        {
+                            times.length === 0 ? <>
+                                <Typography>Nincs elérhető időpont.</Typography>
+                            </> : times.map(time => {
+                                return <ListItemButton
+                                    selected={selectedTime === time}
+                                    onClick={() => {
+                                        setSelectedTime(time);
+                                    }}
+                                >
+                                    <ListItemText primary={`🕑 ${time}`} />
+                                </ListItemButton>;
+                            })
+                        }
                     </List>
                     <NavigationButtons nextEnabled={selectedTime !== ''} />
                 </StepContent>
@@ -150,7 +156,23 @@ function BookingPage() {
                     <Typography>Foglalkozás: {selectedWorkTitle}</Typography>
                     <Typography>Dátum: {selectedDate}</Typography>
                     <Typography>Idő: {selectedTime}</Typography>
-                    <NavigationButtons nextLabel='Foglalás' onNextClick={() => { }} />
+                    <NavigationButtons
+                        nextLabel='Foglalás'
+                        onNextClick={() => {
+                            const uid = getCurrentUser()?.uid;
+                            if (uid === undefined) return;
+                            const ap = new Appointment('', uid, selectedWorkTitle, selectedDate, selectedTime);
+                            updateAppointment(ap, undefined, (isSuccesful) => {
+                                if (isSuccesful) {
+                                    alert('Sikeres foglalás!');
+                                    navigate('/');
+                                }
+                                else {
+                                    alert('Sikertelen foglalás!');
+                                }
+                            });
+                        }}
+                    />
                 </StepContent>
             </Step>
         </Stepper>

@@ -9,12 +9,18 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { getRentalItems } from '../../firebase/firestore';
+import RentalItem from '../../model/RentalItem';
+import ItemDisplay from '../../components/ItemDisplay';
 
 function RentalPage() {
     const navigate = useNavigate();
+    const [rentalItems, setRentalItems] = useState<RentalItem[]>([]);
 
     useEffect(() => {
-
+        getRentalItems(newRentalItems => {
+            setRentalItems(newRentalItems);
+        });
     }, []);
 
     return <Page
@@ -35,7 +41,11 @@ function RentalPage() {
             Vissza
         </Button>
 
-        
+        {
+            rentalItems.map(rentalItem => {
+                return <ItemDisplay item={rentalItem} />;
+            })
+        }
 
     </Page>;
 }

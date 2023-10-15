@@ -3,6 +3,7 @@ import { getCurrentUser } from './auth';
 import { getFirestore, doc, getDoc, getDocs, collection, query, where, updateDoc, QueryDocumentSnapshot, DocumentData, DocumentReference, addDoc, deleteDoc } from 'firebase/firestore';
 import Work from '../model/Work';
 import Appointment from '../model/Appointment';
+import RentalItem from '../model/RentalItem';
 
 const db = getFirestore(app);
 
@@ -95,7 +96,7 @@ export function getAppointments(callback: (appointments: Appointment[]) => void)
         });
 }
 
-export function getAppointmentsByUser(userId: string, callback: (appointments: Appointment[]) => void) {
+export function getAppointmentsByUser(userId: string | undefined, callback: (appointments: Appointment[]) => void) {
     const q = query(collection(db, 'appointments'), where('userId', '==', userId));
     getDocs(q)
         .then(querySnapshot => {
@@ -165,4 +166,45 @@ export function getFreeTimes(date: string, workDuration: number, callback: (time
         //TODO: figure out times based on the incoming data
         callback(['10:00', '11:00', '12:00', '13:00', '14:00', '15:00']);
     });
+}
+
+//
+// Rental items
+//
+export function getRentalItems(callback: (items: RentalItem[]) => void) {
+    getDocs(collection(db, 'items'))
+        .then(querySnapshot => {
+            const items: RentalItem[] = [];
+            querySnapshot.forEach(document => {
+                items.push({ ...new RentalItem(document.id, '', '', '', ''), ...document.data() });
+            });
+            callback(items);
+        })
+        .catch(error => {
+            console.error(error);
+            callback([]);
+        });
+}
+
+export function updateRentalItem(item: RentalItem, oldId: string | undefined, callback: (isSuccesful: boolean) => void) {
+    if (oldId) {
+        updateDoc(doc(db, 'items', oldId), { ...item })
+            .then(() => callback(true))
+            .catch(() => callback(false));
+    }
+    else {
+        addDoc(collection(db, 'items'), { ...item })
+            .then(() => callback(true))
+            .catch(() => callback(false));
+    }
+}
+
+export function deleteRentalItem(id: string | undefined, callback: (isSuccesful: boolean) => void) {
+    if (!id) {
+        callback(false);
+        return;
+    }
+    deleteDoc(doc(db, 'items', id))
+        .then(() => callback(true))
+        .catch(() => callback(false));
 }

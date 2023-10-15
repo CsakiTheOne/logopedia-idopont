@@ -14,6 +14,7 @@
   - [ ] foglalkozások hozzárendelése felhaználókhoz
   - [ ] bonyolultabb szabályok a foglaláshoz
 - tárgy kölcsönzés
+  - [x] kezdetleges felület
   - [ ] felület
   - [ ] kölcsönözhető elemek kezelése
   - [ ] kölcsönzés logika

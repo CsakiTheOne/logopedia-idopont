@@ -21,13 +21,16 @@ import { User } from 'firebase/auth';
 import LoginCard from '../../components/LoginCard';
 import banner from '../../media/banner.png';
 import WorkDisplay from '../../components/WorkDisplay';
-import { getWorks } from '../../firebase/firestore';
+import { getAppointmentsByUser, getWorks } from '../../firebase/firestore';
 import Work from '../../model/Work';
+import Appointment from '../../model/Appointment';
+import AppointmentDisplay from '../../components/AppointmentDisplay';
 
 function MainPage() {
     const navigate = useNavigate();
     const [aboutUs, setAboutUs] = useState('');
     const [works, setWorks] = useState<Work[]>([]);
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [selectedWork, setSelectedWork] = useState<Work | null>(null);
@@ -40,6 +43,10 @@ function MainPage() {
 
         addOnAuthStateChangedListener(user => setIsLoggedIn(!!user));
     }, []);
+
+    useEffect(() => {
+        getAppointmentsByUser(getCurrentUser()?.uid, newAppointments => setAppointments(newAppointments));
+    }, [isLoggedIn]);
 
     return <Page
         header={
@@ -85,6 +92,16 @@ function MainPage() {
                         Böngészés
                     </Button>
                     <Typography variant='h5'>Foglalkozásaim</Typography>
+                    {
+                        appointments.map(appointment => {
+                            return <AppointmentDisplay
+                                appointment={appointment}
+                                onClick={() => {
+                                    //TODO:
+                                }}
+                            />;
+                        })
+                    }
                     <Button onClick={() => navigate('/booking')} variant='contained' startIcon={<AddIcon />}>
                         Új foglalkozás időpont kérése
                     </Button>

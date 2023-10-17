@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { addOnAuthStateChangedListener, getCurrentUser, logOut } from '../../firebase/auth';
+import { addOnAuthStateChangedListener, getCurrentUser, logOut, removeOnAuthStateChangedListener } from '../../firebase/auth';
 import { getAbout } from '../../firebase/rtdb';
 import Page from '../../components/Page';
 import {
@@ -42,10 +42,20 @@ function MainPage() {
 
         setIsLoggedIn(!!getCurrentUser());
 
-        addOnAuthStateChangedListener(user => setIsLoggedIn(!!user));
+        const authStateChangedListener = (user: any) => {
+            setIsLoggedIn(!!user)
+            
+        };
+
+        addOnAuthStateChangedListener(authStateChangedListener);
+
+        return () => {
+            removeOnAuthStateChangedListener(authStateChangedListener);
+        };
     }, []);
 
     useEffect(() => {
+        if (!isLoggedIn) return;
         getAppointmentsByUser(getCurrentUser()?.uid, newAppointments => setAppointments(newAppointments));
     }, [isLoggedIn]);
 

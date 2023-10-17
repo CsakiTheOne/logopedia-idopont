@@ -10,6 +10,7 @@ import {
     signInWithRedirect,
     User,
 } from 'firebase/auth';
+import { setUserEmail } from './firestore';
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -19,6 +20,9 @@ let currentUser: User | null = null;
 onAuthStateChanged(auth, user => {
     currentUser = user;
     onAuthStateChangedListeners.forEach(listener => listener(user));
+    if (user) {
+        setUserEmail(user.uid, user.email || '');
+    }
 });
 
 function addOnAuthStateChangedListener(listener: (user: User | null) => void) {
@@ -27,10 +31,6 @@ function addOnAuthStateChangedListener(listener: (user: User | null) => void) {
 
 function removeOnAuthStateChangedListener(listener: (user: User | null) => void) {
     onAuthStateChangedListeners.filter(l => l !== listener);
-}
-
-function removeAllOnAuthStateChangedListeners() {
-    onAuthStateChangedListeners = [];
 }
 
 function getCurrentUser(): User | null {
@@ -61,7 +61,6 @@ function logOut() {
 export {
     addOnAuthStateChangedListener,
     removeOnAuthStateChangedListener,
-    removeAllOnAuthStateChangedListeners,
     getCurrentUser,
     register,
     logIn,

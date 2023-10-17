@@ -11,7 +11,7 @@
   - [x] saját foglalkozások foglalása, törlése
   - [x] felhasználók foglalásainak megtekintése
   - [x] foglalkozások kezelése (létrehozás, törlés, szerkesztés)
-  - [ ] foglalkozások hozzárendelése felhaználókhoz
+  - [ ] ~~foglalkozások hozzárendelése felhaználókhoz~~
   - [ ] bonyolultabb szabályok a foglaláshoz
 - tárgy kölcsönzés
   - [x] kezdetleges felület

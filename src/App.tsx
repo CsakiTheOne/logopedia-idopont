@@ -1,5 +1,5 @@
 
-import { addOnAuthStateChangedListener } from './firebase/auth';
+import { addOnAuthStateChangedListener, removeOnAuthStateChangedListener } from './firebase/auth';
 import { useEffect, useState } from 'react';
 import { userIsAdmin } from './firebase/firestore';
 import {
@@ -21,11 +21,9 @@ function App() {
 
   useEffect(() => {
     function onAuthChanged(user: User | null) {
-      console.log('onAuthChanged: ' + user);
-      userIsAdmin(isAdmin => {
-        if (user) {
-          if (isAdmin) navigate('/admin');
-          else navigate('/');
+      userIsAdmin((isAdmin: boolean) => {
+        if (user && isAdmin) {
+          navigate('/admin');
         }
         else {
           navigate('/');
@@ -33,7 +31,11 @@ function App() {
       });
     }
 
-    addOnAuthStateChangedListener(onAuthChanged);
+    addOnAuthStateChangedListener((user: any) => onAuthChanged(user));
+
+    return () => {
+      removeOnAuthStateChangedListener((user: any) => onAuthChanged(user));
+    };
   }, [navigate]);
 
   return <Routes>

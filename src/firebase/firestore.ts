@@ -1,6 +1,6 @@
 import { app } from './firebase';
 import { getCurrentUser } from './auth';
-import { getFirestore, doc, getDoc, getDocs, collection, query, where, updateDoc, QueryDocumentSnapshot, DocumentData, DocumentReference, addDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, getDocs, collection, query, where, updateDoc, QueryDocumentSnapshot, DocumentData, DocumentReference, addDoc, deleteDoc, setDoc } from 'firebase/firestore';
 import Work from '../model/Work';
 import Appointment from '../model/Appointment';
 import RentalItem from '../model/RentalItem';
@@ -11,21 +11,38 @@ const db = getFirestore(app);
 // User
 //
 export function userIsAdmin(callback: (isAdmin: boolean) => void) {
-    if (getCurrentUser() == null) {
+    const userUid = getCurrentUser()?.uid;
+    if (!getCurrentUser() || !userUid) {
         callback(false);
         return;
     }
 
-    const userUid = getCurrentUser()?.uid;
-    if (!userUid) return;
-
     const docRef = doc(db, 'users', userUid);
     getDoc(docRef)
         .then(snapshot => {
+            console.log(snapshot.data());
             callback(snapshot.data()?.isAdmin);
         })
         .catch(error => {
+            console.error(error);
             callback(false);
+        });
+}
+export function setUserEmail(uid: string, email: string) {
+    if (!uid) return;
+    const docRef = doc(db, 'users', uid);
+    setDoc(docRef, { email: email }, { merge: true });
+}
+export function getUserEmail(uid: string, callback: (email: string) => void) {
+    if (!uid) return;
+    const docRef = doc(db, 'users', uid);
+    getDoc(docRef)
+        .then(snapshot => {
+            callback(snapshot.data()?.email);
+        })
+        .catch(error => {
+            console.error(error);
+            callback('');
         });
 }
 
